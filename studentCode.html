@@ -1,0 +1,65 @@
+<html>
+
+<head>
+  <title>Wheel</title>
+  <style>
+  .rotated {
+      transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+    }
+  .img{
+        transition: all 0.5s ease;
+        height: 400px;
+        width: 400px;
+      }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script>
+  // 0 = Lose a turn -1 = bannkrupt
+  var values = [0, 800, 350, 450,700,300,
+                 600,5000,600,500,300,500,
+                 800,550,400,300,900,500,
+                 300,900,-1,600,400,300];
+
+  $(document).ready(function() {
+    var degrees = 0;
+    $('.img').click(function rotateMe(e) {
+      genNumber();
+      degrees += 90;
+      $('.img').css({
+          'transform': 'rotate(' + degrees + 'deg)',
+          '-ms-transform': 'rotate(' + degrees + 'deg)',
+          '-moz-transform': 'rotate(' + degrees + 'deg)',
+          '-webkit-transform': 'rotate(' + degrees + 'deg)',
+          '-o-transform': 'rotate(' + degrees + 'deg)'
+        });
+      })
+    });
+
+  function genNumber()
+  {
+    var money = values[parseInt(values.length * Math.random())];
+    document.getElementById('winnings').innerHTML = money;
+  }
+
+  </script>
+</head>
+
+<body>
+  <div>
+     <br>
+     <span id = "winnings"></span>
+  </div>
+
+<div>
+    <img class = "img" src = "wheel.png">
+</div>
+
+</body>
+
+</html>

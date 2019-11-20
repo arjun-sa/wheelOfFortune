@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Wheel of Fortune</title>
+    <link rel = "stylesheet" href = "wheel.css">
+    <style>
+  .rotated {
+      transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+    }
+  .img{
+        transition: all 0.5s ease;
+        height: 400px;
+        width: 400px;
+      }
+    </style>
+    <script src="code.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      // 0 = Lose a turn -1 = bannkrupt
+      var values = [0, 800, 350, 450,700,300,
+                     600,5000,600,500,300,500,
+                     800,550,400,300,900,500,
+                     300,900,600,400,300];
+      var puzzle = ["_" , "_" , "_" , "_" , "_" , "_" , "_" , "_"];
+      var answer = ["j" , "a" , "y" , "a" , "d" , "e" , "e" , "p"];
+      var winnings = 0;
+      var money = 0;
+
+      $(document).ready(function() {
+        var degrees = 0;
+        $('.img').click(function rotateMe(e) {
+          genNumber();
+          degrees += 90;
+          $('.img').css({
+              'transform': 'rotate(' + degrees + 'deg)',
+              '-ms-transform': 'rotate(' + degrees + 'deg)',
+              '-moz-transform': 'rotate(' + degrees + 'deg)',
+              '-webkit-transform': 'rotate(' + degrees + 'deg)',
+              '-o-transform': 'rotate(' + degrees + 'deg)'
+            });
+          })
+        });
+
+      function genNumber()
+      {
+        money = values[parseInt(values.length * Math.random())];
+        document.getElementById('money').innerHTML = money;
+      }
+
+      function check()
+      {
+        var guess = document.getElementById('guess').value;
+        for(var i = 0; i < 8; i++)
+        {
+          if(guess == answer[i])
+          {
+            puzzle[i] = guess;
+            winnings = winnings + money;
+            document.getElementById('init').innerHTML = guess + " is in the puzzle.";
+          }
+
+        }
+        document.getElementById('winnings').innerHTML= winnings;
+        document.getElementById('puzzle').innerHTML = puzzle;
+        if(checkAns() == true)
+        {
+          document.getElementById('complete').innerHTML = "winner!";
+          document.getElementById('picture').innerHTML = "<img src='subaru brz.jpg' class='img'>"
+        }
+      }
+
+      function checkAns()
+      {
+        var count = 0;
+        for(var i = 0; i < 8; i++)2
+        {
+          if(puzzle[i] == answer[i])
+          {
+            count++;
+          }
+        }
+        if(count == 8)
+        {
+          return true;
+        }
+        else {
+          return false;
+
+
+        }
+
+      }
+
+      function display()
+      {
+        document.getElementById('picture').innerHTML = "<img src='wheel.png' class='img' onclick='genNumber()'>"
+        document.getElementById('puzzle').innerHTML = puzzle;
+      }
+
+
+
+    </script>
+  </head>
+<body onload="display()">
+    <h1> Wheel of Fortune </h1>
+    <span id="init"></span>
+    <br>
+    <input type="text" id="guess">
+    <input type="button" value="Guess" onclick="check()">
+    <hr>
+     Money from spin:
+     <span id="money"></span>
+     <br>
+    Total Balance:
+    <span id="winnings"></span>
+    <br></br>
+    <span id="puzzle">_,_,_,_,_,_,_,_</span>
+    <br></br>
+    <span id="picture"><img src="wheel.png" class="img" onclick="genNumber()"></span>
+    <br>
+    <span id="complete"></span>
+</body>
+</html>
